@@ -1,0 +1,12 @@
+{
+  "name": "whatstheirpay",
+  "private": true,
+  "description": "WhatsTheirPay: Chrome extension, landing page and API for transparent pay estimates",
+  "scripts": {
+    "sync": "node scripts/sync-shared.mjs",
+    "check": "node scripts/sync-shared.mjs --check",
+    "start": "npm --prefix server start",
+    "dev": "npm --prefix server run dev",
+    "test": "npm --prefix server test && node scripts/sync-shared.mjs --check"
+  }
+}

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WhatsTheirPay: pay estimates for any LinkedIn profile</title>
+  <meta name="description" content="Transparent salary estimates for any LinkedIn profile or job post: base, bonus and equity, with the math shown. Paste a URL to try it free.">
+  <meta property="og:title" content="WhatsTheirPay: know their pay, name your price">
+  <meta property="og:description" content="Transparent salary estimates for LinkedIn profiles and job posts, with the math shown.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0d1411">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/theme.js"></script>
+</head>
+<body>
+  <svg class="sprite" width="0" height="0" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></g></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/><rect x="3" y="3" width="18" height="18" rx="5"/></g></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-math" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></g></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></g></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></g></symbol>
+    <symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 6.5C17 4.6 14.8 4 12 4S7 5 7 7.5 9.5 10.6 12 11.2s5 1.4 5 4-2.2 3.8-5 3.8-5-.9-5-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="/" aria-label="WhatsTheirPay home"><img src="/assets/img/logo.svg" alt="" width="30" height="30"><span class="wordmark">whats<em>their</em>pay</span></a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#how">How it works</a>
+        <a href="#why">Why 2.0</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle dark mode"><svg class="sun"><use href="#i-sun"/></svg><svg class="moon"><use href="#i-moon"/></svg></button>
+        <a class="btn btn-ghost" href="/account.html" data-account-link>Sign in</a>
+        <button class="btn btn-primary" type="button" data-action="install"><svg><use href="#i-plug"/></svg>Add to Chrome</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="pulse"></span>New · Chrome extension 2.0</span>
+          <h1 class="display">Know their pay.<br><em>Name your price.</em></h1>
+          <p class="lede">Transparent salary estimates for any LinkedIn profile or job post: base, bonus and equity, with the math shown. Paste a URL to try it free.</p>
+
+          <form class="try" id="try-form" novalidate>
+            <label class="sr-only" for="try-url">LinkedIn profile or job URL</label>
+            <div class="try-field" id="try-field">
+              <svg aria-hidden="true"><use href="#i-link"/></svg>
+              <input id="try-url" name="url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Paste a LinkedIn profile URL" aria-describedby="try-error">
+              <span class="valid-dot" aria-hidden="true"></span>
+              <button class="btn btn-brand" type="submit">Estimate pay<svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+            <p class="try-error" id="try-error" role="alert" hidden></p>
+            <div class="try-meta">
+              <span class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg>No signup</span>
+              <span class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><span data-quota-text>3 free estimates a day</span></span>
+              <button class="link-btn" type="button" id="describe-btn">No URL? Describe a role</button>
+            </div>
+            <div class="examples" id="examples" hidden><span>Try an example</span></div>
+          </form>
+        </div>
+
+        <div class="stage" aria-live="polite">
+          <div class="browser" aria-hidden="true">
+            <div class="browser-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url" id="mock-url">linkedin.com/in/alex-rivera</span></div>
+            <div class="pm-cover"></div>
+            <div class="pm-body">
+              <div class="pm-avatar" id="mock-avatar">AR</div>
+              <div class="pm-name"><span id="mock-name">Alex Rivera</span><span class="pm-chip"><svg><use href="#i-dollar"/></svg><span id="mock-chip">$289k – $353k</span></span></div>
+              <div class="pm-headline" id="mock-headline">Senior Product Designer at Figma</div>
+              <div class="pm-loc" id="mock-loc">San Francisco Bay Area · 500+ connections</div>
+              <div class="pm-lines"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="stage-card" id="hero-card"></div>
+          <p class="stage-caption" id="stage-caption">The real result card. Paste a URL and it updates.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="Highlights">
+      <div class="container trust-grid">
+        <div class="trust-item"><svg aria-hidden="true"><use href="#i-spark"/></svg><div><b>No signup to try</b><span>3 estimates a day, free.</span></div></div>
+        <div class="trust-item"><svg aria-hidden="true"><use href="#i-math"/></svg><div><b>Shows its math</b><span>Every factor, every multiplier.</span></div></div>
+        <div class="trust-item"><svg aria-hidden="true"><use href="#i-repeat"/></svg><div><b>Re-views are free</b><span>Same profile within 30 days costs nothing.</span></div></div>
+        <div class="trust-item"><svg aria-hidden="true"><use href="#i-door"/></svg><div><b>Cancel in one click</b><span>Or buy a pass that never renews.</span></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">How it works</span>
+          <h2 class="display">From profile to pay range in <em>one click</em>.</h2>
+          <p>No dashboard to learn. The extension adds a small pay chip right where you already are.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <span class="step-num">01</span>
+            <h3>Add to Chrome</h3>
+            <p>Takes ten seconds. It only asks for access to linkedin.com, nothing else.</p>
+            <div class="step-visual" aria-hidden="true"><div class="sv-install"><span class="fake-btn"><svg><use href="#i-plug"/></svg>Add to Chrome</span><small>Permissions: linkedin.com · storage</small></div></div>
+          </article>
+          <article class="step">
+            <span class="step-num">02</span>
+            <h3>Open a profile or job</h3>
+            <p>A pay chip appears next to the name. Nothing runs, and nothing is counted, until you click it.</p>
+            <div class="step-visual" aria-hidden="true"><div class="sv-profile"><div class="row"><span class="av"></span><span class="ln"></span><span class="pm-chip"><svg><use href="#i-dollar"/></svg>Estimate pay</span></div><span class="ln l70"></span><span class="ln l45"></span></div></div>
+          </article>
+          <article class="step">
+            <span class="step-num">03</span>
+            <h3>Read the range and the reasons</h3>
+            <p>Median, likely range, the base/bonus/equity split and every factor behind it. Edit anything; it recalculates for free.</p>
+            <div class="step-visual" aria-hidden="true"><div class="sv-band"><span class="fig">$319k</span><div class="track"><span class="iqr"></span><span class="mid"></span></div><div class="stack"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="why">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Why 2.0</span>
+          <h2 class="display">Built around what's <em>broken</em> in salary extensions.</h2>
+          <p>Low ratings, pages that stop loading, limits nobody understands. We designed against each complaint.</p>
+        </div>
+        <div class="fixes">
+          <article class="fix">
+            <div class="was"><svg aria-hidden="true"><use href="#i-x"/></svg><s>Black-box numbers you can't sanity-check</s></div>
+            <h3><svg aria-hidden="true"><use href="#i-check"/></svg>Every estimate shows its math</h3>
+            <p>Role benchmark, level, employer type, market and experience, each with its multiplier and a confidence score.</p>
+          </article>
+          <article class="fix">
+            <div class="was"><svg aria-hidden="true"><use href="#i-x"/></svg><s>Stops working when LinkedIn changes its layout</s></div>
+            <h3><svg aria-hidden="true"><use href="#i-check"/></svg>Self-healing on LinkedIn</h3>
+            <p>Page selectors update from our server in minutes. If a page still can't be read, you fill in three fields. It never dead-ends.</p>
+          </article>
+          <article class="fix">
+            <div class="was"><svg aria-hidden="true"><use href="#i-x"/></svg><s>Burns a credit on every page you open</s></div>
+            <h3><svg aria-hidden="true"><use href="#i-check"/></svg>Runs only when you click</h3>
+            <p>Nothing is counted until you ask. Re-viewing a profile within 30 days, or editing its details, is free.</p>
+          </article>
+          <article class="fix">
+            <div class="was"><svg aria-hidden="true"><use href="#i-x"/></svg><s>Three lookups a month to judge it</s></div>
+            <h3><svg aria-hidden="true"><use href="#i-check"/></svg>Enough free to actually decide</h3>
+            <p>Three a day with no account, 30 a month with a free one. Examples on this page are always free.</p>
+          </article>
+          <article class="fix">
+            <div class="was"><svg aria-hidden="true"><use href="#i-x"/></svg><s>Subscriptions you forget to cancel</s></div>
+            <h3><svg aria-hidden="true"><use href="#i-check"/></svg>Priced the way job hunts work</h3>
+            <p>A 30-day pass that never renews, or monthly with one-click cancel. No dark patterns.</p>
+          </article>
+          <article class="fix">
+            <div class="was"><svg aria-hidden="true"><use href="#i-x"/></svg><s>US-only, dollars-only</s></div>
+            <h3><svg aria-hidden="true"><use href="#i-check"/></svg>50+ countries, local currency</h3>
+            <p>Local currency with a USD reference, adjusted for how global and local employers pay differently.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="who">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Who it's for</span>
+          <h2 class="display">Both sides of the <em>table</em>.</h2>
+        </div>
+        <div class="personas">
+          <article class="persona">
+            <span class="tag">Job seekers</span>
+            <blockquote>“I want a number before the recruiter gives me theirs.”</blockquote>
+            <ul>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Negotiation brief: opening ask, target, walk-away</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Posted salary ranges checked against market</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>A copy-ready talk track for the call</li>
+            </ul>
+          </article>
+          <article class="persona">
+            <span class="tag">Recruiters</span>
+            <blockquote>“I need to pitch the right band before the first call.”</blockquote>
+            <ul>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Expectations from a profile in one click</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>1,000 lookups a month on Pro, 3,000 per seat on Team</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Lookup history and CSV export</li>
+            </ul>
+          </article>
+          <article class="persona">
+            <span class="tag">Hiring managers</span>
+            <blockquote>“Is this offer actually competitive here?”</blockquote>
+            <ul>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Compare cities and employer types instantly</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>Fine-tune level and company type yourself</li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg>A methodology you can explain to finance</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="compare">
+      <div class="container">
+        <div class="section-head">
+          <span class="kicker">Compared</span>
+          <h2 class="display">What changes in <em>2.0</em>.</h2>
+        </div>
+        <div class="compare-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"><span class="sr-only">Feature</span></th><th scope="col" class="us">WhatsTheirPay 2.0</th><th scope="col">Typical salary extension</th></tr></thead>
+            <tbody>
+              <tr><td>Try before installing</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>Paste any URL on this page</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Install and sign up first</span></td></tr>
+              <tr><td>Free estimates</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>3 a day without signup, 30 a month with a free account</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Often 3 to 5 a month</span></td></tr>
+              <tr><td>Shows its reasoning</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>Every factor and multiplier</span></td><td><span class="no"><svg><use href="#i-x"/></svg>A single number</span></td></tr>
+              <tr><td>Uncertainty</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>Confidence score and a likely range</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Point estimate</span></td></tr>
+              <tr><td>Base, bonus and equity</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>Split on every estimate</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Total only, or paywalled</span></td></tr>
+              <tr><td>When a page can't be read</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>Fill in three fields and keep going</span></td><td><span class="no"><svg><use href="#i-x"/></svg>An error message</span></td></tr>
+              <tr><td>Viewing a profile again</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>Free for 30 days</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Another credit</span></td></tr>
+              <tr><td>Currency</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>50+ countries, local currency</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Usually USD only</span></td></tr>
+              <tr><td>Commitment</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>30-day pass that never renews</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Monthly subscription</span></td></tr>
+              <tr><td>Profile owner opt-out</td><td class="us"><span class="yes"><svg><use href="#i-check"/></svg>One form, honored immediately</span></td><td><span class="no"><svg><use href="#i-x"/></svg>Rarely offered</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container pricing-center">
+        <div class="section-head center">
+          <span class="kicker">Pricing</span>
+          <h2 class="display">Simple pricing. <em>No traps.</em></h2>
+          <p>Start free. Upgrade when you're negotiating. Cancel when you're done.</p>
+        </div>
+        <div class="billing-toggle" role="group" aria-label="Billing period">
+          <button type="button" data-interval="month" aria-pressed="true">Monthly</button>
+          <button type="button" data-interval="year" aria-pressed="false">Yearly <span class="save">−33%</span></button>
+          <button type="button" data-interval="pass" aria-pressed="false">30-day pass</button>
+        </div>
+        <div class="plans" id="plans"><p class="muted">Loading plans…</p></div>
+        <div class="pricing-notes">
+          <div><b>What counts as an estimate?</b>One unique profile, job or role. Viewing it again within 30 days, or editing its details up to 10 times, is free.</div>
+          <div><b>No account?</b>Guests get 3 estimates a day, on this site and in the extension.</div>
+          <div><b>Fair limits, shown up front</b>Burst limits keep things fast. If you hit one you get a countdown, never a silent failure.</div>
+        </div>
+        <details class="limits">
+          <summary>See every limit</summary>
+          <div class="compare-wrap"><table class="compare" id="limits-table"></table></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section alt" id="faq">
+      <div class="container faq-grid">
+        <div class="section-head">
+          <span class="kicker">FAQ</span>
+          <h2 class="display">Questions, <em>answered</em>.</h2>
+          <p>Something else? <a href="mailto:hello@whatstheirpay.com">hello@whatstheirpay.com</a></p>
+        </div>
+        <div class="faq-list">
+          <details open><summary>Is this the person's actual salary?</summary><div class="answer"><p>No. It's a market estimate for someone with that title, level, employer type and location. We never see payroll data, and every estimate is labeled that way.</p></div></details>
+          <details><summary>How accurate is it?</summary><div class="answer"><p>Every estimate comes with a confidence score and a range, and the range widens when we know less. A specific title, a known company and a city usually give a high-confidence range.</p><p>We'd rather show an honest wide range than a precise-looking wrong number.</p></div></details>
+          <details><summary>Where do the numbers come from?</summary><div class="answer"><p>An open model: a benchmark base salary for each of 45+ role families, adjusted for level, employer type, market and experience. Benchmarks are set from public sources such as government wage statistics, H-1B salary disclosures and pay ranges in job posts.</p><p>Every assumption is listed in our <a href="/methodology.html">methodology</a>.</p></div></details>
+          <details><summary>What does the extension read?</summary><div class="answer"><p>Only the profile or job you're viewing, and only after you click. It sends the title, company, location and experience dates to calculate the estimate.</p><p>No browsing history, messages or contacts. It doesn't crawl LinkedIn or run in the background.</p></div></details>
+          <details><summary>Is it affiliated with LinkedIn?</summary><div class="answer"><p>No. WhatsTheirPay is an independent tool that works on pages you already have open. LinkedIn is a trademark of LinkedIn Corporation.</p></div></details>
+          <details><summary>What counts as an estimate?</summary><div class="answer"><p>One unique profile, job or role. Viewing it again within 30 days is free, and so are up to 10 edits to its details. Examples on this page never count.</p></div></details>
+          <details><summary>Can I opt out my own profile?</summary><div class="answer"><p>Yes. <button class="link-btn" type="button" data-open="optout">Submit your profile URL</button> and we'll stop estimating it and delete any stored lookups of it.</p></div></details>
+          <details><summary>How do I cancel?</summary><div class="answer"><p>From your account page, in one click. A 30-day pass simply ends; it never renews.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="container">
+        <div class="final-card">
+          <div>
+            <h2 class="display">Your next offer deserves <em>a number</em>.</h2>
+            <p>Free to try. Ten seconds to install.</p>
+          </div>
+          <div class="final-actions">
+            <button class="btn btn-lime btn-lg" type="button" data-action="install"><svg aria-hidden="true"><use href="#i-plug"/></svg>Add to Chrome, free</button>
+            <a class="btn btn-ghost btn-lg" href="#top" data-scroll-try>Try on a profile</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="/"><img src="/assets/img/logo.svg" alt="" width="30" height="30"><span class="wordmark">whats<em>their</em>pay</span></a>
+          <p class="footer-tag">Transparent pay estimates for LinkedIn profiles and job posts.</p>
+        </div>
+        <div><h4>Product</h4><ul><li><a href="#how">How it works</a></li><li><a href="#pricing">Pricing</a></li><li><a href="/methodology.html">Methodology</a></li><li><a href="/account.html">Account</a></li></ul></div>
+        <div><h4>For</h4><ul><li><a href="#who">Job seekers</a></li><li><a href="#who">Recruiters</a></li><li><a href="#who">Hiring managers</a></li></ul></div>
+        <div><h4>Trust</h4><ul><li><a href="/privacy.html">Privacy</a></li><li><button class="link-btn" type="button" data-open="optout">Opt out your profile</button></li><li><a href="mailto:hello@whatstheirpay.com">Contact</a></li></ul></div>
+      </div>
+      <div class="fine"><span>© 2026 WhatsTheirPay. Estimates are market-based and are not anyone's actual pay.</span><span>Not affiliated with LinkedIn Corporation.</span></div>
+    </div>
+  </footer>
+
+  <dialog id="dlg-signin" aria-labelledby="signin-title">
+    <button class="dialog-close" type="button" data-close aria-label="Close">×</button>
+    <form class="dialog-body" id="signin-email" novalidate>
+      <h3 id="signin-title">Sign in</h3>
+      <p id="signin-sub">We'll email you a 6-digit code. No password needed.</p>
+      <label class="field">Email<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+      <p class="form-error" data-error hidden></p>
+      <button class="btn btn-primary btn-block btn-lg" type="submit">Email me a code</button>
+    </form>
+    <form class="dialog-body" id="signin-code" hidden novalidate>
+      <h3>Check your email</h3>
+      <p>Enter the code we sent to <b data-email></b>.</p>
+      <label class="field">6-digit code<input class="code-input" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required></label>
+      <p class="dev-note" data-dev hidden>Development mode: email isn't configured, so the code was filled in for you.</p>
+      <p class="form-error" data-error hidden></p>
+      <button class="btn btn-primary btn-block btn-lg" type="submit">Continue</button>
+      <button class="link-btn" type="button" data-back>Use a different email</button>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-install" aria-labelledby="install-title">
+    <button class="dialog-close" type="button" data-close aria-label="Close">×</button>
+    <div class="dialog-body">
+      <h3 id="install-title">Add it to Chrome</h3>
+      <p>The Chrome Web Store listing is in review. To try the extension today:</p>
+      <ol class="steps-list">
+        <li>Download this project and open <code>chrome://extensions</code>.</li>
+        <li>Turn on <b>Developer mode</b> (top right).</li>
+        <li>Click <b>Load unpacked</b> and choose the <code>extension</code> folder.</li>
+        <li>Open any LinkedIn profile and click the pay chip.</li>
+      </ol>
+      <button class="btn btn-primary btn-block" type="button" data-close>Got it</button>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-optout" aria-labelledby="optout-title">
+    <button class="dialog-close" type="button" data-close aria-label="Close">×</button>
+    <form class="dialog-body" id="optout-form" novalidate>
+      <h3 id="optout-title">Opt out your profile</h3>
+      <p>We'll stop estimating this profile for everyone and delete stored lookups of it. No account needed.</p>
+      <label class="field">Your LinkedIn profile URL<input name="url" type="url" required placeholder="linkedin.com/in/your-name"></label>
+      <p class="form-error" data-error hidden></p>
+      <button class="btn btn-primary btn-block btn-lg" type="submit">Opt out</button>
+    </form>
+    <div class="dialog-body" id="optout-done" hidden>
+      <h3>Done</h3>
+      <p>That profile won't be estimated again.</p>
+      <button class="btn btn-primary btn-block" type="button" data-close>Close</button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/assets/js/card.js" defer></script>
+  <script src="/assets/js/api.js" defer></script>
+  <script src="/assets/js/app.js" defer></script>
+</body>
+</html>

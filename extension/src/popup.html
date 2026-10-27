@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WhatsTheirPay</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <span class="brand"><img src="../icons/icon32.png" alt="" width="22" height="22">whats<em>their</em>pay</span>
+    <span class="pill" id="plan">Guest</span>
+  </header>
+
+  <section class="block">
+    <div class="row"><span id="who" class="muted">Browsing as a guest</span><button class="link" id="signout" hidden>Sign out</button></div>
+    <div class="quota"><span id="quota-text">3 free estimates a day</span><span id="quota-reset" class="muted"></span></div>
+    <div class="meter"><span id="quota-bar"></span></div>
+    <p class="error" id="error" hidden></p>
+  </section>
+
+  <form class="block" id="signin" novalidate hidden>
+    <b id="signin-title">Get 30 free estimates a month</b>
+    <p class="muted" id="signin-sub">Sign in with your email. We'll send a 6-digit code.</p>
+    <input id="signin-input" type="email" autocomplete="email" placeholder="you@example.com" required>
+    <button class="btn primary" type="submit" id="signin-btn">Email me a code</button>
+  </form>
+
+  <section class="block actions" id="actions">
+    <button class="btn brand" type="button" id="upgrade" hidden>Upgrade to Pro</button>
+    <button class="btn ghost" type="button" id="account">Account</button>
+  </section>
+
+  <section class="block" id="recent-block" hidden>
+    <b>Recent</b>
+    <ul class="recent" id="recent"></ul>
+  </section>
+
+  <section class="block settings">
+    <label class="switch-row">
+      <span><b>Auto-reveal on profiles</b><small>Estimate as soon as a profile opens. <span class="tag">Pro</span></small></span>
+      <input type="checkbox" role="switch" id="autoReveal">
+    </label>
+    <label class="switch-row">
+      <span><b>Show on job posts</b><small>Market pay next to job titles.</small></span>
+      <input type="checkbox" role="switch" id="showOnJobs">
+    </label>
+  </section>
+
+  <details class="block dev">
+    <summary>Developer</summary>
+    <label class="muted" for="apiBase">API server</label>
+    <div class="row"><input id="apiBase" type="url" spellcheck="false"><button class="btn ghost small" type="button" id="saveApi">Save</button></div>
+  </details>
+
+  <footer class="foot muted">Estimates are market-based, not anyone's actual pay. Not affiliated with LinkedIn.</footer>
+  <script src="card.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Methodology · WhatsTheirPay</title>
+  <meta name="description" content="How WhatsTheirPay estimates compensation: benchmarks, multipliers, confidence and ranges.">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/theme.js"></script>
+</head>
+<body>
+  <header class="nav scrolled">
+    <div class="container nav-inner">
+      <a class="brand" href="/" aria-label="WhatsTheirPay home"><img src="/assets/img/logo.svg" alt="" width="30" height="30"><span class="wordmark">whats<em>their</em>pay</span></a>
+      <div class="nav-actions"><a class="btn btn-ghost" href="/">Try it</a></div>
+    </div>
+  </header>
+  <main class="page">
+    <div class="container page-narrow">
+      <span class="kicker">Methodology v2026.10</span>
+      <h1 class="display">How an estimate is made</h1>
+      <div class="prose">
+        <p>Every estimate is calculated, not guessed: the same inputs always give the same answer, and the card shows each factor that moved the number. Nothing here uses anyone's real payroll data.</p>
+
+        <h2>The formula</h2>
+        <p><b>Base</b> = role benchmark × level × employer type × market × experience.</p>
+        <p><b>Bonus or commission</b> = base × the role's target variable pay, which rises 18% per level above mid for bonus roles and is scaled by employer type. Sales roles use commission at roughly constant on-target splits.</p>
+        <p><b>Equity</b> = base × the employer type's typical equity share × the role's equity intensity × the level's equity multiplier. Private-company equity is labeled as paper value.</p>
+        <p>Components under 2% of base are dropped rather than shown as noise.</p>
+
+        <h3>Role benchmarks</h3>
+        <p>Titles are matched to 45+ role families (Software Engineering, Product Management, Nursing, Investment Banking…). Each family has a benchmark US base salary for a mid-level individual contributor at a typical company, set from public sources such as government wage statistics, H-1B salary disclosures and pay ranges in job posts.</p>
+
+        <h3>Level</h3>
+        <p>Read from the title (Senior, Staff, Director, L5, SDE II, banking ladders…), else from the job's seniority field, else inferred from years of experience. You can override it.</p>
+        <table>
+          <thead><tr><th>Level</th><th>Base ×</th><th>Equity ×</th></tr></thead>
+          <tbody>
+            <tr><td>Intern</td><td>0.55</td><td>0</td></tr>
+            <tr><td>Entry level</td><td>0.80</td><td>0.3</td></tr>
+            <tr><td>Mid level</td><td>1.00</td><td>0.6</td></tr>
+            <tr><td>Senior</td><td>1.25</td><td>1.0</td></tr>
+            <tr><td>Staff / Lead / Manager</td><td>1.52</td><td>1.5</td></tr>
+            <tr><td>Principal / Senior Manager</td><td>1.80</td><td>2.0</td></tr>
+            <tr><td>Director</td><td>2.05</td><td>2.4</td></tr>
+            <tr><td>Senior Director / Head of</td><td>2.35</td><td>2.8</td></tr>
+            <tr><td>Vice President</td><td>2.75</td><td>3.4</td></tr>
+            <tr><td>C-suite</td><td>3.20</td><td>4.0</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Employer type</h3>
+        <p>Known companies are mapped to a type; others are classified by keywords (University, Bank, Stealth…) or treated as a typical employer. You can override it.</p>
+        <table>
+          <thead><tr><th>Employer type</th><th>Base ×</th><th>Variable ×</th><th>Senior equity, % of base</th></tr></thead>
+          <tbody>
+            <tr><td>Big Tech</td><td>1.12</td><td>1.4</td><td>55%</td></tr>
+            <tr><td>Top-tier trading firm</td><td>1.30</td><td>2.5</td><td>0%</td></tr>
+            <tr><td>Top-tier consulting</td><td>1.35</td><td>1.6</td><td>0%</td></tr>
+            <tr><td>High-growth / late-stage</td><td>1.06</td><td>0.8</td><td>35%</td></tr>
+            <tr><td>Early-stage startup</td><td>0.92</td><td>0.4</td><td>28%</td></tr>
+            <tr><td>Established enterprise</td><td>1.03</td><td>1.15</td><td>10%</td></tr>
+            <tr><td>Major bank / financial firm</td><td>1.00</td><td>1.0</td><td>3%</td></tr>
+            <tr><td>Typical company</td><td>1.00</td><td>1.0</td><td>5%</td></tr>
+            <tr><td>Agency / IT services / Big Four</td><td>0.95</td><td>0.9</td><td>1%</td></tr>
+            <tr><td>Public sector, education, non-profit</td><td>0.84</td><td>0.3</td><td>0%</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Market</h3>
+        <p>About 30 US metros and 50+ countries, each with a pay multiplier against the US national level, converted to local currency at approximate exchange rates (shown with a USD reference). In markets where global employers pay far above local ones (India, Brazil, the Philippines…), global employer types get a market premium and IT-services firms a discount. Some families, such as consulting and banking, follow national pay scales more than local ones.</p>
+
+        <h3>Experience</h3>
+        <p>Years of experience nudge pay within a level: about ±1.2% per year away from the level's typical tenure, capped between −4.8% and +7.2%.</p>
+
+        <h2>Confidence and ranges</h2>
+        <p>Confidence (0–100) adds up how specific each signal was:</p>
+        <table>
+          <thead><tr><th>Signal</th><th>Strong</th><th>Partial</th><th>Missing</th></tr></thead>
+          <tbody>
+            <tr><td>Role match</td><td>30</td><td>15 (generic title)</td><td>5</td></tr>
+            <tr><td>Level</td><td>20 (in title)</td><td>16 job field · 12 from experience</td><td>6</td></tr>
+            <tr><td>Market</td><td>20 (metro)</td><td>14 country · 10 remote</td><td>4</td></tr>
+            <tr><td>Employer</td><td>20 (known)</td><td>12 keyword · 8 unknown name</td><td>2</td></tr>
+            <tr><td>Years of experience</td><td>10</td><td></td><td>0</td></tr>
+          </tbody>
+        </table>
+        <p>It is capped at 95 (lower for inherently noisy groups such as founders and students). The range width follows from it: with spread <code>s = 0.08 + (1 − confidence/100) × 0.25</code>, the likely range is median × (1 − s) to median × (1 + 1.15s). Pay distributions skew right, so the upper side is wider. Pro adds the p10–p90 tails.</p>
+
+        <h2>Job posts</h2>
+        <p>When a job post shows a salary range (required in a growing number of places), we annualize it and compare its midpoint with the market's median base for that role, flagging posts more than 5% above or below.</p>
+
+        <h2>Limits of the model</h2>
+        <p>Estimates describe the market for a role, not a person. They can't see individual negotiation, performance, refreshers, or company-specific bands, and private-company equity values are illiquid. When we know less, the range gets wider instead of pretending to precision.</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
